@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control de programacion</title>
+    <link rel="shortcut icon" href="#{request.contextPath}/resources/images/ico.png" type="image/x-icon"/>
+
+    <!--Core CSS -->
+    <link href="#{request.contextPath}/resources/bs3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/bootstrap-reset.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/js/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/clndr.css" rel="stylesheet"/>
+    <!--clock css-->
+    <link href="#{request.contextPath}/resources/js/css3clock/css/style.css" rel="stylesheet"/>
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="#{request.contextPath}/resources/js/morris-chart/morris.css"/>
+    <!-- Custom styles for this template -->
+    <link href="#{request.contextPath}/resources/css/style.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/style-responsive.css" rel="stylesheet"/>
+
+</h:head>
+<h:body>
+
+    <h:form id="mainForm">
+
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <img src="#{request.contextPath}/resources/images/loader_gif.gif" width="30" height="30"/>
+        </p:dialog>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+            <p:commandButton value="Si" style="background-color:#1F91B5" type="button" styleClass="ui-confirmdialog-yes" />
+            <p:commandButton value="No" style="background-color:#555" type="button" styleClass="ui-confirmdialog-no" />
+        </p:confirmDialog>
+
+
+        <section id="container">
+
+            <ui:include src="../header.xhtml"/>
+
+            <ui:include src="../menu.xhtml"/>
+
+            <!-- main-content start -->
+            <section id="main-content" class="">
+                <section class="wrapper">
+                    <!-- page start-->
+                    <!-- page start-->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <section class="panel">
+                                <p:fragment id="mainFragment" rendered="#{controlProgramacionBean.mostrarMain == true}">
+                                    <header class="panel-heading">
+                                        Control de programaci&oacute;n
+                                    </header>
+
+                                    <div style="padding: 0 15px">
+                                        <p:messages id="messages" showDetail="true" autoUpdate="true" life="5000" closable="true" />
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="position-right" style="width: 100%;overflow:hidden">
+                                            <div class="form-group" style="width: 33%;float: left;">
+                                                <label>N&uacute;mero OT</label>
+                                                <p:inputText id="codigo" styleClass="inputTextb" value="#{controlProgramacionBean.ordenDeTrabajoId}"
+                                                             style="margin-right: 10px;float: left;clear: both;margin-bottom: 20px;"/>
+                                            </div>
+
+                                            <div class="form-group" style="width: 15%;float: left;">
+                                                <label>Fecha</label>
+                                                <p:calendar  value="#{controlProgramacionBean.fecha}" styleClass="calendar" style="width: 100%; float: left" pattern="dd/MM/yyyy" />
+                                            </div>
+
+                                            <div class="form-group" style="width: 33%;float: left;">
+                                                <p:commandButton
+                                                        style="float: left;color: #000;margin-top: 23px;margin-left: 20px;height: 34px;"
+                                                        styleClass="ui-priority-primary"
+                                                        icon="ui-icon-search"
+                                                        value="Buscar"
+                                                        ajax="true"
+                                                        update="mainForm"
+                                                        action="#{controlProgramacionBean.buscar}"/>
+                                            </div>
+                                        </div>
+
+                                        <p:fragment id="tabla" rendered="#{controlProgramacionBean.mostrarTabla == true}">
+                                            <div style="border-bottom: 1px solid #eee;padding: 7px 0 10px 0;clear: both;float: left;width: 100%;">
+                                                <h4 style="display: block;width: 280px;color:#1F91B5;float:left">Control de programaci&oacute;n por d&iacute;a</h4><p:commandButton action="#{controlProgramacionBean.agregarRegistro}" update="mainForm" style="float:right" styleClass="boton_tabla" value="Agregar control" />
+                                            </div>
+
+                                            <p:dataTable emptyMessage="No hay controles de programacion asociados a la fecha." id="controles" var="control" lazy="true" rows="15" paginator="true"
+                                                         value="#{controlProgramacionBean.controles}" style="clear:both" paginatorPosition="bottom" rowsPerPageTemplate="15,30,50">
+
+                                                <p:column headerText="Cantidad" width="100">
+                                                    <h:outputText value="#{control.cantidad}"/>
+                                                </p:column>
+
+                                                <p:column headerText="Fecha entrega" width="100">
+                                                    <h:outputText value="#{control.fechaEntrega}">
+                                                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                                    </h:outputText>
+                                                </p:column>
+
+                                                <p:column headerText="Fecha real" width="100">
+                                                    <h:outputText value="#{control.fechaReal}">
+                                                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                                    </h:outputText>
+                                                </p:column>
+
+                                                <p:column headerText="% Avance" width="80">
+                                                    <h:outputText value="#{control.porcentajeAvance} %"/>
+                                                </p:column>
+
+                                                <p:column headerText="Nota o detalle" width="250">
+                                                    <h:outputText value="#{control.nota}"/>
+                                                </p:column>
+
+                                                <p:column headerText="Acciones" width="160">
+
+                                                    <p:commandButton id="editarRegistro"
+                                                                     value="Editar"
+                                                                     ajax="true"
+                                                                     action="#{controlProgramacionBean.editarRegistro(control)}"
+                                                                     styleClass="boton_tabla_editar"
+                                                                     style="background-color:#555"
+                                                                     update="mainForm"/>
+
+                                                    <p:commandButton id="eliminarRegistro"
+                                                                     value="Eliminar"
+                                                                     ajax="true"
+                                                                     action="#{controlProgramacionBean.eliminarRegistro(control)}"
+                                                                     styleClass="boton_tabla_eliminar"
+                                                                     style="background-color:#D00707"
+                                                                     update="mainForm">
+                                                        <p:confirm header="Confirmacion" message="Estas seguro de eliminar el registro" icon="ui-icon-alert" />
+                                                    </p:commandButton>
+                                                </p:column>
+
+                                            </p:dataTable>
+                                        </p:fragment>
+
+                                    </div>
+                                </p:fragment>
+
+                                <p:fragment id="editRegistroFragment" rendered="#{controlProgramacionBean.mostrarDetalleRegistro == true}">
+                                    <header class="panel-heading">
+                                        Nuevo control de programaci&oacute;n
+                                    </header>
+
+                                    <div style="padding: 0 15px">
+                                        <p:messages id="messagesDetalle" showDetail="true" autoUpdate="true" life="5000" closable="true" />
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div style="border-bottom: 1px solid #eee;padding: 7px 0 10px 0;clear:both;margin-bottom: 12px;">
+                                            <h4 style="display: block;width: 238px;color:#1F91B5">Registro de programaci&oacute;n</h4>
+                                        </div>
+
+                                        <div class="position-right" style="width: 100%;">
+                                            <div class="form-group" style="width: 50%;float: left;">
+                                                <label>Cantidad</label>
+                                                <p:inputText value="#{controlProgramacionBean.controlSeleccionado.cantidad}" styleClass="inputTextb" style="color: #767676;font-weight: bold; "/>
+                                            </div>
+
+                                            <div class="form-group" style="width: 50%;float: left;">
+                                                <label>Fecha de entrega</label>
+                                                <p:calendar value="#{controlProgramacionBean.controlSeleccionado.fechaEntrega}" styleClass="calendar" style="width: 95%; float: left" pattern="dd/MM/yyyy" />
+                                            </div>
+
+                                            <div class="form-group" style="width: 50%;float: left;">
+                                                <label>Fecha real</label>
+                                                <p:calendar value="#{controlProgramacionBean.controlSeleccionado.fechaReal}" styleClass="calendar" style="width: 95%; float: left" pattern="dd/MM/yyyy" />
+                                            </div>
+
+                                            <div class="form-group" style="width: 50%;float: left;">
+                                                <label>Porcentaje avance</label>
+                                                <h:panelGrid columns="1" style="margin-bottom: 10px">
+                                                    <h:outputText id="output" value="#{controlProgramacionBean.controlSeleccionado.porcentajeAvance}%" />
+                                                    <h:inputHidden id="txt2" value="#{controlProgramacionBean.controlSeleccionado.porcentajeAvance}" />
+                                                    <p:slider for="txt2" display="output" style="width: 400px" displayTemplate="{value}%" />
+                                                </h:panelGrid>
+                                            </div>
+
+                                            <div class="form-group" style="width: 50%;float: left;">
+                                                <label>Nota / Detalle</label>
+                                                <p:inputTextarea value="#{controlProgramacionBean.controlSeleccionado.nota}" styleClass="inputTextb" style="color: #767676;font-weight: bold; "/>
+                                            </div>
+
+                                        </div>
+
+                                        <div style="margin-top: 61px;margin: 0 auto;text-align: center;">
+                                            <p:commandButton id="save" value="Guardar control" action="#{controlProgramacionBean.guardarRegistro}" styleClass="boton_tabla_editar" title="Guardar" update="mainForm" process="@all" style="margin-right:5px"/>
+                                            <p:commandButton id="delete_all" value="Borrar todo" action="#{controlProgramacionBean.limpiar}" styleClass="boton_tabla_editar" title="Borrar todo" update="mainForm" process="@all" style="margin-right:5px; background-color: #555"/>
+                                            <p:commandButton id="atras" value="Atr&aacute;s" action="#{controlProgramacionBean.atrasRegistro}" styleClass="boton_tabla_editar" title="Borrar todo" update="mainForm" process="@all" style="margin-right:5px; background-color: #555"/>
+                                        </div>
+
+                                    </div>
+                                </p:fragment>
+                            </section>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </section>
+            <!-- main-content end -->
+        </section>
+
+        <script type="text/javascript" src="../resources/bs3/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.dcjqaccordion.2.7.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.scrollTo.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.nicescroll.js"></script>
+        <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+        <script type="text/javascript" src="../resources/js/skycons/skycons.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.scrollTo/jquery.scrollTo.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+        <script type="text/javascript" src="../resources/js/calendar/clndr.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+        <script type="text/javascript" src="../resources/js/calendar/moment-2.2.1.js"></script>
+        <script type="text/javascript" src="../resources/js/evnt.calendar.init.js"></script>
+        <script type="text/javascript" src="../resources/js/jvector-map/jquery-jvectormap-1.2.2.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jvector-map/jquery-jvectormap-us-lcc-en.js"></script>
+        <!--clock init-->
+        <script type="text/javascript" src="../resources/js/css3clock/js/css3clock.js"></script>
+        <!--Easy Pie Chart-->
+        <script type="text/javascript" src="../resources/js/easypiechart/jquery.easypiechart.js"></script>
+        <!--Sparkline Chart-->
+        <script type="text/javascript" src="../resources/js/sparkline/jquery.sparkline.js"></script>
+        <!--jQuery Flot Chart-->
+        <script type="text/javascript" src="../resources/js/jquery.customSelect.min.js" ></script>
+        <!--common script init for all pages-->
+        <script type="text/javascript" src="../resources/js/scripts.js"></script>
+        <!--script for this page-->
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#produccion').addClass('active');
+                $('#sub_produccion').css('display', 'block');
+                $('#control_programacion').addClass('active');
+            });
+        </script>
+    </h:form>
+
+</h:body>
+</html>

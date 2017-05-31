@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Busqueda de ordenes de compra por proveedor</title>
+
+    <!--Core CSS -->
+    <link href="#{request.contextPath}/resources/bs3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/bootstrap-reset.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/js/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/clndr.css" rel="stylesheet"/>
+    <!--clock css-->
+    <link href="#{request.contextPath}/resources/js/css3clock/css/style.css" rel="stylesheet"/>
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="#{request.contextPath}/resources/js/morris-chart/morris.css"/>
+    <!-- Custom styles for this template -->
+    <link href="#{request.contextPath}/resources/css/style.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/style-responsive.css" rel="stylesheet"/>
+
+</h:head>
+<h:body>
+
+    <h:form id="form">
+
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <img src="#{request.contextPath}/resources/images/loader_gif.gif" width="30" height="30"/>
+        </p:dialog>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+            <p:commandButton value="Si" style="background-color:#1F91B5" type="button" styleClass="ui-confirmdialog-yes" />
+            <p:commandButton value="No" style="background-color:#555" type="button" styleClass="ui-confirmdialog-no" />
+        </p:confirmDialog>
+
+
+        <section id="container">
+
+            <ui:include src="../header.xhtml"/>
+
+            <ui:include src="../menu.xhtml"/>
+
+            <!-- main-content start -->
+            <section id="main-content" class="">
+                <section class="wrapper">
+                    <!-- page start-->
+                    <!-- page start-->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    B&uacute;squeda de ordenes de compra por proveedor.
+                                </header>
+
+                                <div style="padding: 0 15px">
+                                    <p:messages id="messages" showDetail="true" autoUpdate="true" life="5000" closable="true" />
+                                </div>
+
+
+                                <div class="panel-body">
+                                    <div class="position-right" style="width: 48%; float:left;margin-bottom: 20px;">
+
+                                        <div class="form-group">
+                                            <label style="float:left">Proveedor</label>
+                                            <p:remoteCommand name="buscarPorRut" actionListener="#{busquedasOrdenCompraBean.buscarPorRut}" update="form"/>
+                                            <p:inputText id="rut" styleClass="inputText" placeholder="Rut" value="#{busquedasOrdenCompraBean.proveedor.rut}" onkeypress="if (event.keyCode == 13) { buscarPorRut(); return false; } if(event.which &lt; 48 || event.which &gt; 57) return false;" style="width: 33%;float: left;clear: both;" />
+                                            <p:inputText styleClass="inputText" placeholder="Nombre" value="#{busquedasOrdenCompraBean.proveedor.nombreRazonSocial}" style="width: 57%;float: left;margin-left: 10px;" />
+                                            <p:commandButton
+                                                    style="float:right; width:6%;"
+                                                    styleClass="ui-priority-primary"
+                                                    icon="ui-icon-search"
+                                                    ajax="true"
+                                                    onclick="PF('dialogProveedoresVar').show();"/>
+
+                                            <p:dialog
+                                                    id="dialogProveedores"
+                                                    header="Selecciona el proveedor"
+                                                    widgetVar="dialogProveedoresVar"
+                                                    modal="true"
+                                                    width="900"
+                                                    resizable="false"
+                                                    position="center"
+                                                    appendTo="form">
+
+                                                <p:dataTable emptyMessage="No hay proveedores registrados." id="proveedores" var="proveedor" rows="15" paginator="true" lazy="true"
+                                                             value="#{busquedasOrdenCompraBean.fichas}" style="clear:both" paginatorPosition="bottom" rowsPerPageTemplate="15,30,50">
+
+                                                    <p:column headerText="Codigo" sortBy="#{proveedor.id}">
+                                                        <h:outputText value="#{proveedor.id}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="Nombre / Raz&oacute;n social" filterBy="#{proveedor.nombreRazonSocial}" filterMatchMode="contains">
+                                                        <h:outputText value="#{proveedor.nombreRazonSocial}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="RUT" filterBy="#{proveedor.rut}" filterMatchMode="contains">
+                                                        <h:outputText value="#{proveedor.rut}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="Seleccionar" width="150">
+                                                        <p:commandButton
+                                                                styleClass="ui-priority-primary"
+                                                                icon="ui-icon-search"
+                                                                process="@this"
+                                                                action="#{busquedasOrdenCompraBean.seleccionarFicha(proveedor)}"
+                                                                onsuccess="PF('dialogProveedoresVar').hide();"
+                                                                update="form">
+                                                        </p:commandButton>
+                                                    </p:column>
+                                                </p:dataTable>
+
+                                            </p:dialog>
+                                        </div>
+                                    </div>
+
+                                    <p:fragment rendered="#{busquedasOrdenCompraBean.mostrarTabla}">
+                                        <p:dataTable emptyMessage="No hay ordenes de compra asociadas." id="ordenes" var="orden" rows="15" paginator="true" lazy="true"
+                                                     value="#{busquedasOrdenCompraBean.ordenes}" style="clear:both" paginatorPosition="bottom" rowsPerPageTemplate="15,30,50">
+
+                                            <p:column headerText="Codigo" sortBy="#{orden.id}" filterMatchMode="contains">
+                                                <h:outputText value="#{orden.id}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Asociada a la requisici&oacute;n">
+                                                <h:outputText value="#{orden.requisicion.id}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Proveedor">
+                                                <h:outputText value="#{orden.proveedor.nombreRazonSocial}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Condici&oacute;n de pago">
+                                                <h:outputText value="#{orden.condicionPago.descripcion}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Estado">
+                                                <h:outputText value="#{orden.estadoOrdenCompra.descripcion}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Fecha">
+                                                <h:outputText value="#{orden.fecha}">
+                                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                                </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Seleccionar" width="150">
+                                                <p:button
+                                                        styleClass="ui-priority-primary"
+                                                        icon="ui-icon-search"
+                                                        process="@this"
+                                                        outcome="OrdenDeCompra.xhtml?faces-redirect=true&amp;id_orden=#{orden.id}">
+                                                </p:button>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:fragment>
+
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+
+                </section>
+            </section>
+            <!-- main-content end -->
+        </section>
+
+        <script type="text/javascript" src="../resources/js/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
+        <script type="text/javascript" src="../resources/bs3/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.dcjqaccordion.2.7.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.scrollTo.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.nicescroll.js"></script>
+        <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+        <script type="text/javascript" src="../resources/js/skycons/skycons.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.scrollTo/jquery.scrollTo.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+        <script type="text/javascript" src="../resources/js/calendar/clndr.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+        <script type="text/javascript" src="../resources/js/calendar/moment-2.2.1.js"></script>
+        <script type="text/javascript" src="../resources/js/evnt.calendar.init.js"></script>
+        <script type="text/javascript" src="../resources/js/jvector-map/jquery-jvectormap-1.2.2.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jvector-map/jquery-jvectormap-us-lcc-en.js"></script>
+        <!--clock init-->
+        <script type="text/javascript" src="../resources/js/css3clock/js/css3clock.js"></script>
+        <!--Easy Pie Chart-->
+        <script type="text/javascript" src="../resources/js/easypiechart/jquery.easypiechart.js"></script>
+        <!--Sparkline Chart-->
+        <script type="text/javascript" src="../resources/js/sparkline/jquery.sparkline.js"></script>
+        <!--jQuery Flot Chart-->
+        <script type="text/javascript" src="../resources/js/jquery.customSelect.min.js" ></script>
+        <!--common script init for all pages-->
+        <script type="text/javascript" src="../resources/js/scripts.js"></script>
+        <!-- Jquery RUT Validation -->
+        <h:outputScript library="js" name="jquery.Rut.js" />
+        <h:outputScript library="js" name="jquery.Rut.min.js" />
+        <!--script for this page-->
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#abastecimiento').addClass('active');
+                $('#sub_abastecimiento').css('display', 'block');
+                $('#busqueda_proveedor').addClass('active');
+
+                $('#form\\:rut').Rut({
+                    on_error: function(){ alert('Rut incorrecto'); },
+                    format_on: 'keyup'
+                });
+            });
+        </script>
+    </h:form>
+
+</h:body>
+</html>

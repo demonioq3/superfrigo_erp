@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Informe de requisiciones</title>
+    <link rel="shortcut icon" href="#{request.contextPath}/resources/images/ico.png" type="image/x-icon"/>
+
+    <!--Core CSS -->
+    <link href="#{request.contextPath}/resources/bs3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/bootstrap-reset.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/js/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/clndr.css" rel="stylesheet"/>
+    <!--clock css-->
+    <link href="#{request.contextPath}/resources/js/css3clock/css/style.css" rel="stylesheet"/>
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="#{request.contextPath}/resources/js/morris-chart/morris.css"/>
+    <!-- Custom styles for this template -->
+    <link href="#{request.contextPath}/resources/css/style.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/style-responsive.css" rel="stylesheet"/>
+
+</h:head>
+<h:body>
+
+    <h:form id="form">
+
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <img src="#{request.contextPath}/resources/images/loader_gif.gif" width="30" height="30"/>
+        </p:dialog>
+
+        <section id="container">
+
+            <ui:include src="../header.xhtml"/>
+
+            <ui:include src="../menu.xhtml"/>
+
+            <!-- main-content start -->
+            <section id="main-content" class="">
+                <section class="wrapper">
+                    <!-- page start-->
+                    <!-- page start-->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    Informe de requisiciones
+                                </header>
+                                <div style="padding: 0 15px">
+                                    <p:messages id="msgs" showDetail="true" autoUpdate="true" life="5000" closable="true" />
+                                </div>
+
+                                <div class="panel-body">
+                                    <div style="clear:both">
+                                        <h6 style="font-size: 13px;border-bottom: 1px solid #ddd;padding-bottom: 7px;color: #1F91B5;">Rango de fechas</h6>
+                                    </div>
+
+                                    <div class="position-right" style="width: 100%;">
+                                        <div class="form-group" style="width: 50%;float: left;">
+                                            <label>Desde</label>
+                                            <p:calendar value="#{informeRequisicionesBean.fechaDesde}" styleClass="calendar_informe" pattern="dd-MM-yyy" style="color: #767676;font-weight: bold; width: 95%"/>
+                                        </div>
+
+                                        <div class="form-group" style="width: 50%;float: left;">
+                                            <label>Hasta</label>
+                                            <p:calendar value="#{informeRequisicionesBean.fechaHasta}" styleClass="calendar_informe" pattern="dd-MM-yyy" style="color: #767676;font-weight: bold; width: 95%"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body" style="margin-top:-15px">
+                                    <div class="position-right" style="width: 50%;float:left">
+                                        <div style="clear:both">
+                                            <h6 style="font-size: 13px;border-bottom: 1px solid #ddd;padding-bottom: 7px;color: #1F91B5;">&Aacute;reas</h6>
+                                        </div>
+
+                                        <div class="form-group" style="width: 100%;float: left;">
+                                            <p:selectOneMenu id="area" value="#{informeRequisicionesBean.areaId}" style="width:95%;border: 1px solid #ddd;">
+                                                <f:selectItem itemLabel="Todas las &aacute;reas" itemValue="#{0}" />
+                                                <f:selectItems value="#{requisicionesBean.areas}" var="area" itemLabel="#{area.nombreArea}" itemValue="#{area.id}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-right" style="width: 50%;float:left">
+                                        <div style="clear:both">
+                                            <h6 style="font-size: 13px;border-bottom: 1px solid #ddd;padding-bottom: 7px;color: #1F91B5;">Estados</h6>
+                                        </div>
+
+                                        <div class="form-group" style="width: 100%;float: left;">
+                                            <p:selectOneMenu id="estado" value="#{informeRequisicionesBean.estadoId}" style="width:95%;border: 1px solid #ddd;">
+                                                <f:selectItem itemLabel="Todos los estados" itemValue="#{0}" />
+                                                <f:selectItems value="#{requisicionesBean.allEstadosRequisicion}" var="estado" itemLabel="#{estado.descripcion}" itemValue="#{estado.id}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 61px;margin: 0 auto;text-align: center;height: 50px;">
+                                    <p:commandButton id="save" value="Generar informe" ajax="false" action="#{informeRequisicionesBean.getReportData}" styleClass="boton_tabla_editar" title="Generar informe?" style="margin-top: 70px;margin: 0 auto;text-align: center;height: 30px;"/>
+                                </div>
+
+                            </section>
+                        </div>
+
+                    </div>
+
+                </section>
+            </section>
+            <!-- main-content end -->
+        </section>
+
+        <script type="text/javascript" src="../resources/js/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
+        <script type="text/javascript" src="../resources/bs3/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.dcjqaccordion.2.7.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.scrollTo.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.nicescroll.js"></script>
+        <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+        <script type="text/javascript" src="../resources/js/skycons/skycons.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.scrollTo/jquery.scrollTo.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+        <script type="text/javascript" src="../resources/js/jvector-map/jquery-jvectormap-1.2.2.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jvector-map/jquery-jvectormap-us-lcc-en.js"></script>
+        <!--clock init-->
+        <script type="text/javascript" src="../resources/js/css3clock/js/css3clock.js"></script>
+        <!--Easy Pie Chart-->
+        <script type="text/javascript" src="../resources/js/easypiechart/jquery.easypiechart.js"></script>
+        <!--Sparkline Chart-->
+        <script type="text/javascript" src="../resources/js/sparkline/jquery.sparkline.js"></script>
+        <!--jQuery Flot Chart-->
+        <script type="text/javascript" src="../resources/js/jquery.customSelect.min.js" ></script>
+        <!--common script init for all pages-->
+        <script type="text/javascript" src="../resources/js/scripts.js"></script>
+        <!--script for this page-->
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#abastecimiento').addClass('active');
+                $('#sub_abastecimiento').css('display', 'block');
+                $('#informe_requisiciones').addClass('active');
+            });
+        </script>
+    </h:form>
+
+</h:body>
+</html>

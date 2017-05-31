@@ -1,0 +1,132 @@
+<!--sidebar start-->
+<aside xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui">
+   <div id="sidebar" class="nav-collapse">
+      <!-- sidebar menu start-->
+      <div class="leftside-navigation">
+         <ul class="sidebar-menu" id="nav-accordion">
+             <p:fragment rendered="#{authBean.containsCapacity(2) || authBean.containsCapacity(3) || authBean.containsCapacity(4)}">
+                 <li class="sub-menu">
+                     <a href="javascript:;" id="proyectos">
+                         <i class="fa fa-folder"></i>
+                         <span>Proyectos</span>
+                     </a>
+                     <ul class="sub" id="sub_proyectos">
+                         <p:fragment rendered="#{authBean.containsCapacity(2)}"><li id="definicion_recetas"><a href="#{request.contextPath}/proyectos/DefinicionRecetas.xhtml">Definición de recetas</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(3)}"><li id="planos_fabricacion"><a href="#{request.contextPath}/proyectos/PlanosFabricacion.xhtml">Planos de fabricación</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(4)}"><li id="informe_recetas"><a href="#{request.contextPath}/proyectos/InformeRecetas.xhtml">Informe Recetas de fabricación</a></li></p:fragment>
+
+                     </ul>
+                 </li>
+             </p:fragment>
+             <p:fragment rendered="#{authBean.containsCapacity(5) || authBean.containsCapacity(6) || authBean.containsCapacity(7) || authBean.containsCapacity(8) || authBean.containsCapacity(9) || authBean.containsCapacity(10) || authBean.containsCapacity(11) || authBean.containsCapacity(12) || authBean.containsCapacity(13) || authBean.containsCapacity(14) || authBean.containsCapacity(15) || authBean.containsCapacity(16)}">
+                 <li class="sub-menu">
+                     <a href="javascript:;" id="produccion">
+                         <i class="fa fa-cog"></i>
+                         <span>Producción</span>
+                     </a>
+                     <ul class="sub" id="sub_produccion">
+                         <p:fragment rendered="#{authBean.containsCapacity(5)}"><li id="orden_trabajo"><a href="#{request.contextPath}/produccion/OrdenTrabajo.xhtml">Orden de trabajo</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(6)}"><li id="control_despacho"><a href="#{request.contextPath}/produccion/ControlDespacho.xhtml">Control de despacho</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(7)}"><li id="control_facturacion"><a href="#{request.contextPath}/produccion/ControlFacturacion.xhtml">Control de facturación</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(8)}"><li id="control_liberacion"><a href="#{request.contextPath}/produccion/ControlLiberacion.xhtml">Control de liberación</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(9)}"><li id="control_programacion"><a href="#{request.contextPath}/produccion/ControlProgramacion.xhtml">Control de programación</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(10)}"><li id="programacion_planta"><a href="#{request.contextPath}/produccion/ProgramacionPlanta.xhtml">Programación de planta</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(11)}"><li id="mantenedor_hh"><a href="#{request.contextPath}/registrohh/MantenedorHH.xhtml">Mantenedor de HH</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(12)}"><li id="ficha_trabajador"><a href="#{request.contextPath}/registrohh/FichaTrabajador.xhtml">Ficha de trabajador</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(13)}"><li id="mantenedor_areas_hh"><a href="#{request.contextPath}/registrohh/MantenedorAreasHH.xhtml">Mantenedor de áreas HH</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(14)}"><li id="registro_hh"><a href="#{request.contextPath}/registrohh/RegistroHH.xhtml">Registro de HH</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(15)}"><li id="consulta_stock_recetas"><a href="#{request.contextPath}/produccion/ConsultaStockRecetas.xhtml">Consulta stock de recetas</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(16)}"><li id="solicitud_materiales"><a href="#{request.contextPath}/solicitud_material/SolicitudMaterial.xhtml">Solicitud de materiales</a></li></p:fragment>
+                     </ul>
+                 </li>
+             </p:fragment>
+             <p:fragment rendered="#{authBean.containsCapacity(1)}">
+                 <li class="sub-menu">
+                     <a href="javascript:;" id="usuarios">
+                         <i class="fa fa-users"></i>
+                         <span>Usuarios</span>
+                     </a>
+                     <ul class="sub" id="sub_usuarios">
+                         <p:fragment rendered="#{authBean.containsCapacity(1)}"><li id="mantenedor_usuarios"><a href="#{request.contextPath}/usuarios/MantenedorUsuarios.xhtml">Mantenedor de usuarios</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(1)}"><li id="mantenedor_perfiles"><a href="#{request.contextPath}/usuarios/MantenedorPerfiles.xhtml">Mantenedor de perfiles</a></li></p:fragment>
+                     </ul>
+                 </li>
+             </p:fragment>
+             <p:fragment rendered="#{authBean.containsCapacity(17) || authBean.containsCapacity(18) || authBean.containsCapacity(19) || authBean.containsCapacity(20) || authBean.containsCapacity(21) || authBean.containsCapacity(22) || authBean.containsCapacity(23) || authBean.containsCapacity(24) || authBean.containsCapacity(25)}">
+                 <li class="sub-menu">
+                     <a href="javascript:;" id="comercial">
+                         <i class="fa fa-suitcase"></i>
+                         <span>Comercial</span>
+                     </a>
+                     <ul class="sub" id="sub_comercial">
+                         <p:fragment rendered="#{authBean.containsCapacity(17)}"><li id="generacion_cotizacion"><a href="#{request.contextPath}/comercial/SolicitudCotizacion.xhtml">Generación de cotización</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(18)}"><li id="ver_cotizaciones"><a href="#{request.contextPath}/comercial/Cotizaciones.xhtml">Todas las cotizaciones</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(19)}"><li id="en_estudio"><a href="#{request.contextPath}/comercial/CotizacionesEnEstudio.xhtml">Cotizaciones en estudio</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(20)}"><li id="aprobacion_comercial"><a href="#{request.contextPath}/comercial/CotizacionesParaAprobacionComercial.xhtml">Cotizaciones para aprobar comercialmente</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(21)}"><li id="aprobacion_financiera"><a href="#{request.contextPath}/comercial/CotizacionesParaAprobacionFinanciera.xhtml">Cotizaciones para aprobar financiera</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(22)}"><li id="aprobacion_cliente"><a href="#{request.contextPath}/comercial/CotizacionesParaAprobacionCliente.xhtml">Cotizaciones para aprobar por cliente</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(23)}"><li id="mantenedor_centros"><a href="#{request.contextPath}/comercial/MantenedorCentrosDeCostos.xhtml">Mantenedor de centros de costo</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(24)}"><li id="mantenedor_fichas"><a href="#{request.contextPath}/comercial/FichaAuxiliar.xhtml">Fichas auxiliares</a></li></p:fragment>
+                         <p:fragment rendered="#{authBean.containsCapacity(25)}"><li id="informe_cotizaciones"><a href="#{request.contextPath}/comercial/InformeCotizaciones.xhtml">Informe de cotizaciones</a></li></p:fragment>
+                     </ul>
+                 </li>
+             </p:fragment>
+             <p:fragment rendered="#{authBean.containsCapacity(26) || authBean.containsCapacity(27) || authBean.containsCapacity(28) || authBean.containsCapacity(29) || authBean.containsCapacity(30) || authBean.containsCapacity(31) || authBean.containsCapacity(32) || authBean.containsCapacity(33) || authBean.containsCapacity(34) || authBean.containsCapacity(35) || authBean.containsCapacity(36) || authBean.containsCapacity(37)}">
+                 <li class="sub-menu">
+                   <a href="javascript:;" id="abastecimiento">
+                      <i class="fa fa-exchange"></i>
+                      <span>Abastecimiento</span>
+                   </a>
+                   <ul class="sub" id="sub_abastecimiento">
+                       <p:fragment rendered="#{authBean.containsCapacity(26)}"><li id="requisicion"><a href="#{request.contextPath}/abastecimiento/SolicitudRequisicion.xhtml">Solicitud de requisición</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(27)}"><li id="validar_requisicion"><a href="#{request.contextPath}/abastecimiento/ValidarRequisiciones.xhtml">Validar requisiciones pendientes</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(28)}"><li id="orden_de_compra"><a href="#{request.contextPath}/abastecimiento/OrdenDeCompra.xhtml">Orden de compra</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(29)}"><li id="mantenedor_condicion_pago"><a href="#{request.contextPath}/abastecimiento/MantenedorCondicionPago.xhtml">Mantenedor condiciones de pago</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(30)}"><li id="busqueda_proveedor"><a href="#{request.contextPath}/abastecimiento/BusquedaPorProveedor.xhtml">Busqueda de ordenes de compra por proveedor</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(31)}"><li id="busqueda_producto"><a href="#{request.contextPath}/abastecimiento/BusquedaPorProducto.xhtml">Busqueda de ordenes de compra por producto</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(32)}"><li id="mantenedor_centros"><a href="#{request.contextPath}/abastecimiento/MantenedorCentrosDeCostos.xhtml">Mantenedor de centros de costo</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(33)}"><li id="mantenedor_fichas"><a href="#{request.contextPath}/abastecimiento/FichaAuxiliar.xhtml">Fichas auxiliares</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(34)}"><li id="recepcion_completa"><a href="#{request.contextPath}/abastecimiento/RecepcionCompletaOT.xhtml">Recepción completa a órdenes de compra</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(35)}"><li id="informe_ordenes"><a href="#{request.contextPath}/abastecimiento/InformeOrdenesDeCompra.xhtml">Informe órdenes de compra</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(36)}"><li id="informe_requisiciones"><a href="#{request.contextPath}/abastecimiento/InformeRequisiciones.xhtml">Informe de requisiciones</a></li></p:fragment>
+                       <p:fragment rendered="#{authBean.containsCapacity(37)}"><li id="ficha_producto_ab"><a href="#{request.contextPath}/abastecimiento/FichaProducto.xhtml">Ficha de producto</a></li></p:fragment>
+                   </ul>
+                </li>
+            </p:fragment>
+            <p:fragment rendered="#{authBean.containsCapacity(38) || authBean.containsCapacity(39) || authBean.containsCapacity(40) || authBean.containsCapacity(41) || authBean.containsCapacity(42) || authBean.containsCapacity(43) || authBean.containsCapacity(44) || authBean.containsCapacity(45) || authBean.containsCapacity(46) || authBean.containsCapacity(47) || authBean.containsCapacity(48) || authBean.containsCapacity(49) || authBean.containsCapacity(50) || authBean.containsCapacity(51) || authBean.containsCapacity(52) || authBean.containsCapacity(53)}">
+                <li class="sub-menu">
+                 <a href="javascript:;" id="bodega">
+                     <i class="fa fa-archive"></i>
+                     <span>Bodega</span>
+                 </a>
+                 <ul class="sub" id="sub_bodega">
+                     <p:fragment rendered="#{authBean.containsCapacity(38)}"><li id="guia_entrada"><a href="#{request.contextPath}/bodega/GuiaEntrada.xhtml">Guia de entrada</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(39)}"><li id="guia_salida"><a href="#{request.contextPath}/bodega/GuiaSalida.xhtml">Guia de salida</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(40)}"><li id="mantenedor_bodegas"><a href="#{request.contextPath}/bodega/MantenedorBodegas.xhtml">Mantenedor de bodegas</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(41)}"><li id="mantenedor_grupos"><a href="#{request.contextPath}/bodega/MantenedorGrupos.xhtml">Mantenedor de grupos</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(42)}"><li id="mantenedor_subgrupos"><a href="#{request.contextPath}/bodega/MantenedorSubGrupos.xhtml">Mantenedor de subgrupos</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(43)}"><li id="mantenedor_unidades"><a href="#{request.contextPath}/bodega/MantenedorUnidadMedida.xhtml">Mantenedor de unidades de medida</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(44)}"><li id="mantenedor_centros"><a href="#{request.contextPath}/bodega/MantenedorCentrosDeCostos.xhtml">Mantenedor de centros de costo</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(45)}"><li id="mantenedor_fichas"><a href="#{request.contextPath}/bodega/FichaAuxiliar.xhtml">Fichas auxiliares</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(46)}"><li id="ficha_producto"><a href="#{request.contextPath}/bodega/FichaProducto.xhtml">Ficha de producto</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(47)}"><li id="consulta_stock"><a href="#{request.contextPath}/bodega/ConsultaStock.xhtml">Consulta de stock</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(48)}"><li id="informe_stock"><a href="#{request.contextPath}/bodega/InformeStock.xhtml">Informe de stock</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(49)}"><li id="informe_guia_entrada"><a href="#{request.contextPath}/bodega/InformeGuiaEntrada.xhtml">Informe de guias de entrada</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(50)}"><li id="informe_guia_salida"><a href="#{request.contextPath}/bodega/InformeGuiaSalida.xhtml">Informe de guias de salida</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(51)}"><li id="informe_consumo"><a href="#{request.contextPath}/bodega/InformeConsumo.xhtml">Informe de consumo</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(52)}"><li id="registro_existencia"><a href="#{request.contextPath}/bodega/InformeRegistroExistencia.xhtml">Registro de existencia</a></li></p:fragment>
+                     <p:fragment rendered="#{authBean.containsCapacity(53)}"><li id="toma_inventario"><a href="#{request.contextPath}/bodega/TomaInventario.xhtml">Toma de inventario</a></li></p:fragment>
+                 </ul>
+                </li>
+             </p:fragment>
+
+         </ul>
+      </div>
+      <!-- sidebar menu end-->
+   </div>
+</aside>
+        <!--sidebar end-->

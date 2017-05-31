@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="SuperFrigoPersistenceUnit">
+
+        <jta-data-source>java:/SFDS</jta-data-source>
+
+        <class>cl.superfrigo.entity.Producto</class>
+        <class>cl.superfrigo.entity.Region</class>
+        <class>cl.superfrigo.entity.Comuna</class>
+        <class>cl.superfrigo.entity.Usuario</class>
+        <class>cl.superfrigo.entity.Perfil</class>
+        <class>cl.superfrigo.entity.Capacidad</class>
+        <class>cl.superfrigo.entity.FichaAuxiliar</class>
+        <class>cl.superfrigo.entity.TipoFichaAuxiliar</class>
+        <!-- COMERCIAL-->
+        <class>cl.superfrigo.entity.comercial.OrdenDeTrabajo</class>
+        <class>cl.superfrigo.entity.comercial.EstadoCotizacion</class>
+        <class>cl.superfrigo.entity.comercial.EstadoOrdenTrabajo</class>
+        <class>cl.superfrigo.entity.comercial.CamaraForm</class>
+        <class>cl.superfrigo.entity.comercial.RefrigeracionForm</class>
+        <class>cl.superfrigo.entity.comercial.PuertaForm</class>
+        <class>cl.superfrigo.entity.comercial.PanelForm</class>
+        <class>cl.superfrigo.entity.comercial.MoldeduraForm</class>
+        <!-- ABASTECIMIENTO-->
+        <class>cl.superfrigo.entity.abastecimiento.Area</class>
+        <class>cl.superfrigo.entity.abastecimiento.CentroDeCosto</class>
+        <class>cl.superfrigo.entity.abastecimiento.CondicionPago</class>
+        <class>cl.superfrigo.entity.abastecimiento.EstadoOrdenCompra</class>
+        <class>cl.superfrigo.entity.abastecimiento.EstadoRequisicion</class>
+        <class>cl.superfrigo.entity.abastecimiento.EtapaOrdenCompra</class>
+        <class>cl.superfrigo.entity.abastecimiento.OrdenDeCompra</class>
+        <class>cl.superfrigo.entity.abastecimiento.PrecioProducto</class>
+        <class>cl.superfrigo.entity.abastecimiento.ProductoOrdenCompra</class>
+        <class>cl.superfrigo.entity.abastecimiento.Requisicion</class>
+        <!-- BODEGA-->
+        <class>cl.superfrigo.entity.bodega.Bodega</class>
+        <class>cl.superfrigo.entity.bodega.BodegaStockProducto</class>
+        <class>cl.superfrigo.entity.bodega.ConceptoEntrada</class>
+        <class>cl.superfrigo.entity.bodega.ConceptoSalida</class>
+        <class>cl.superfrigo.entity.bodega.EntradaProductoCantidad</class>
+        <class>cl.superfrigo.entity.bodega.FichaProducto</class>
+        <class>cl.superfrigo.entity.bodega.Grupo</class>
+        <class>cl.superfrigo.entity.bodega.GuiaEntrada</class>
+        <class>cl.superfrigo.entity.bodega.GuiaSalida</class>
+        <class>cl.superfrigo.entity.bodega.SalidaProductoCantidad</class>
+        <class>cl.superfrigo.entity.bodega.UnidadMedida</class>
+        <class>cl.superfrigo.entity.bodega.TipoFichaProducto</class>
+        <class>cl.superfrigo.entity.bodega.SubGrupo</class>
+        <class>cl.superfrigo.entity.bodega.TomaInventario</class>
+        <class>cl.superfrigo.entity.bodega.ProductoTomaInventario</class>
+        <class>cl.superfrigo.entity.bodega.TipoFormulario</class>
+        <!-- PROYECTOS -->
+        <class>cl.superfrigo.entity.proyectos.Receta</class>
+        <class>cl.superfrigo.entity.proyectos.ProductoReceta</class>
+        <class>cl.superfrigo.entity.proyectos.PlanoFabricacion</class>
+        <!-- REGISTRO HH -->
+        <class>cl.superfrigo.entity.registros_hh.AreaHH</class>
+        <class>cl.superfrigo.entity.registros_hh.DefinicionHH</class>
+        <class>cl.superfrigo.entity.registros_hh.EstadoHH</class>
+        <class>cl.superfrigo.entity.registros_hh.RegistroHH</class>
+        <class>cl.superfrigo.entity.registros_hh.TrabajadorHH</class>
+        <!-- PRODUCCION -->
+        <class>cl.superfrigo.entity.produccion.ControlDespacho</class>
+        <class>cl.superfrigo.entity.produccion.ControlFacturacion</class>
+        <class>cl.superfrigo.entity.produccion.ControlLiberacion</class>
+        <class>cl.superfrigo.entity.produccion.ControlProgramacion</class>
+        <!-- SOLMATERIALES -->
+        <class>cl.superfrigo.entity.solicitud_material.SolicitudMaterial</class>
+        <class>cl.superfrigo.entity.solicitud_material.ProductoSolicitudMaterial</class>
+
+        <properties>
+            <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+
+
+    </persistence-unit>
+</persistence>

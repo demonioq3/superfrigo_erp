@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+   <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Superfrigo</title>
+   <link rel="shortcut icon" href="#{request.contextPath}/resources/images/ico.png" type="image/x-icon"/>
+
+   <!--Core CSS -->
+   <link href="#{request.contextPath}/resources/bs3/css/bootstrap.min.css" rel="stylesheet"/>
+   <link href="#{request.contextPath}/resources/css/bootstrap-reset.css" rel="stylesheet"/>
+   <link href="#{request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+   <!-- Custom styles for this template -->
+   <link href="#{request.contextPath}/resources/css/login.css" rel="stylesheet"/>
+   <link href="#{request.contextPath}/resources/css/style-responsive.css" rel="stylesheet" />
+
+   <!-- Anuimaciones -->
+   <link rel="stylesheet" href="#{request.contextPath}/resources/css/animate.css"/>
+   <!--Core js-->
+   <script type="application/javascript" src="#{request.contextPath}/resources/js/jquery.js"/>
+   <script type="application/javascript" src="#{request.contextPath}/resources/bs3/js/bootstrap.min.js"/>
+
+   <script type="text/javascript">
+      $( "#login" ).click(function() {
+         // Changing to the second view.
+            $('#first_layout').fadeIn('slow');
+      });
+   </script>
+
+
+</h:head>
+<h:body id="first_layout">
+
+   <h:form id="form">
+         <div class="container">
+
+            <div class="form-signin animated flipInX">
+               <div class="login_logo_div">
+                  <img alt="logo" class="iconImage" src="#{request.contextPath}/resources/images/logo_small.jpg"/>
+               </div>
+
+               <div class="login-wrap">
+                  <div class="user-login-info">
+                     <div style="margin: 0 auto">
+                        <p:outputLabel id="error" value="#{authBean.mensajeError}" style="color:#fff"/>
+                     </div>
+                     <p:inputText type="text" styleClass="form-control" placeholder="Correo electrónico" value="#{authBean.email}" style="color:#000" />
+                     <p:inputText type="password" styleClass="form-control" placeholder="Password" value="#{authBean.password}" style="color:#000"/>
+                  </div>
+
+                   <div style="margin: 0 auto;float: right;">
+                        <p:commandButton id="login" value="Ingresar" action="#{authBean.login}" update="error" styleClass="btn btn-info animated shake" style="margin:0 auto;margin-top: -7px;"/>
+                   </div>
+                  <div style="margin: 0 auto;margin-top: 20px;">
+                     <p style="color: #000;font-size: 10px;margin-bottom: 0px;">SuperFrigo 2016. Todos los derechos reservados.</p>
+                  </div>
+                  <p style="font-weight: bold;font-size: 10px;color: #0781cc;margin-top: -13px;margin-right: 17px;float: right;">v1.0.0</p>
+
+               </div>
+            </div>
+
+         </div>
+   </h:form>
+
+</h:body>
+</html>

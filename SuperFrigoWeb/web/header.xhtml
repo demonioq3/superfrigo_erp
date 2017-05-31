@@ -1,0 +1,46 @@
+<!--header start-->
+<header class="header fixed-top clearfix"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
+   <!--logo start-->
+   <div class="brand">
+
+      <a href="#{request.contextPath}/home.xhtml" class="logo">
+         <img id="logo_in" src="#{request.contextPath}/resources/images/logo.png" class="animated infinite pulse" style="-vendor-animation-duration: 3s;-vendor-animation-delay: 10s;-vendor-animation-iteration-count: infinite;" alt=""/>
+      </a>
+      <div class="sidebar-toggle-box">
+         <div class="fa fa-bars"></div>
+      </div>
+   </div>
+   <!--logo end-->
+
+
+   <div class="top-nav clearfix">
+      <!--search & user info start-->
+      <ul class="nav pull-right top-menu">
+         <!-- user login dropdown start-->
+         <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+               <img alt="" src="#{request.contextPath}/resources/images/avatar1_small.jpg"/>
+               <span class="username"><p:outputLabel value="#{authBean.loggedUser.nombres} #{authBean.loggedUser.apellidos}"/></span>
+               <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu extended logout">
+               <li><p:commandLink actionListener="#{authBean.logout()}" value="Salir"/></li>
+            </ul>
+         </li>
+         <!-- user login dropdown end -->
+         <li>
+            <div class="toggle-right-box">
+               <div class="fa fa-bars"></div>
+            </div>
+         </li>
+      </ul>
+      <!--search & user info end-->
+   </div>
+</header>
+        <!--header end-->

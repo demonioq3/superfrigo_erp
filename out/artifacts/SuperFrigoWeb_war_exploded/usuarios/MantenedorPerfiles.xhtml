@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="#{request.contextPath}/resources/images/ico.png" type="image/x-icon"/>
+    <title>Perfiles</title>
+
+    <!--Core CSS -->
+    <link href="#{request.contextPath}/resources/bs3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/js/jquery-ui/jquery-ui-1.10.1.custom.min.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/bootstrap-reset.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/js/jvector-map/jquery-jvectormap-1.2.2.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/clndr.css" rel="stylesheet"/>
+    <!--clock css-->
+    <link href="#{request.contextPath}/resources/js/css3clock/css/style.css" rel="stylesheet"/>
+    <!--Morris Chart CSS -->
+    <link rel="stylesheet" href="#{request.contextPath}/resources/js/morris-chart/morris.css"/>
+    <!-- Custom styles for this template -->
+    <link href="#{request.contextPath}/resources/css/style.css" rel="stylesheet"/>
+    <link href="#{request.contextPath}/resources/css/style-responsive.css" rel="stylesheet"/>
+
+</h:head>
+<h:body>
+
+    <h:form id="form">
+
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <img src="#{request.contextPath}/resources/images/loader_gif.gif" width="30" height="30"/>
+        </p:dialog>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+            <p:commandButton value="Si" style="background-color:#1F91B5" type="button" styleClass="ui-confirmdialog-yes" />
+            <p:commandButton value="No" style="background-color:#555" type="button" styleClass="ui-confirmdialog-no" />
+        </p:confirmDialog>
+
+        <section id="container">
+
+            <ui:include src="../header.xhtml"/>
+
+            <ui:include src="../menu.xhtml"/>
+
+            <!-- main-content start -->
+            <p:fragment id="main" rendered="#{perfilesBean.showMain}">
+                <section id="main-content" class="">
+                    <section class="wrapper">
+                        <!-- page start-->
+                        <!-- page start-->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <section class="panel">
+                                <header class="panel-heading">
+                                    MANTENEDOR DE PERFILES
+                                </header>
+                                <div class="panel-body">
+
+                                    <p:messages id="messages" showDetail="true" autoUpdate="true" life="5000" closable="true" />
+
+                                    <p:commandButton id="new" value="Crear nuevo perfil" actionListener="#{perfilesBean.newPerfil()}" update="form" styleClass="boton_tabla"/>
+
+                                    <p:dataTable id="profiles" var="profile" widgetVar="singleDTVar" value="#{perfilesBean.allPerfils}" paginatorPosition="bottom"
+                                                 rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15" emptyMessage="No hay perfiles creados" style="clear:both; margin-top:40px">
+
+                                        <p:column headerText="ID" sortBy="#{profile.id}" width="80">
+                                            <h:outputText value="#{profile.id}" />
+                                        </p:column>
+
+                                        <p:column headerText="Perfil" width="150">
+                                            <h:outputText value="#{profile.nombre}" />
+                                        </p:column>
+
+
+                                        <p:column headerText="Capacidades" width="100">
+                                            <h:outputText value="#{profile.capacities.size()}"/><h:outputText value=" capacidad(es)."/>
+                                        </p:column>
+
+                                        <p:column headerText="Acciones" width="85" exportable="false">
+                                            <p:commandButton id="edit" styleClass="boton_tabla_editar" title="Editar" value="Editar" action="#{perfilesBean.setSelectItem(profile)}" update="form" style="background-color:#555"/>
+                                            <p:commandButton id="delete" styleClass="boton_tabla_eliminar" ajax="true" value="Eliminar" action="#{perfilesBean.delete(profile)}" update="form">
+                                                <p:confirm header="Confirmacion" message="Estas seguro de eliminar el perfil" icon="ui-icon-alert" />
+                                            </p:commandButton>
+
+                                            <!-- <Tool Tips> -->
+                                            <p:tooltip id="saveTip" for="edit" value="Editar" />
+                                            <p:tooltip id="deleteTip" for="delete" value="Eliminar" />
+                                            <!-- </Tool Tips> -->
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </div>
+                                </section>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+
+            </p:fragment>
+
+            <p:fragment id="edit" rendered="#{!perfilesBean.showMain}">
+                <section id="main-content" class="">
+                    <section class="wrapper">
+                        <!-- page start-->
+                        <!-- page start-->
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <section class="panel">
+                                        <header class="panel-heading">
+                                            EDICION DE PERFIL
+                                        </header>
+
+                                        <p:messages id="messages2" showDetail="true" autoUpdate="true" closable="true" life="5000"/>
+
+
+                                        <div class="panel-body">
+                                            <div class="position-right" style="width: 48%;margin:0 auto;">
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Nombre"/>
+                                                    <p:inputText value="#{perfilesBean.selectItem.nombre}" id="profileName" styleClass="inputText" placeholder=""/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h:outputLabel value="Capacidades"/>
+                                                    <p:selectManyCheckbox id="grid" value="#{perfilesBean.capacities}" layout="grid" columns="2">
+                                                        <f:selectItems value="#{perfilesBean.allCapacities}" var="capacity" itemLabel="#{capacity.nombre}" itemValue="#{capacity.nombre}" />
+                                                    </p:selectManyCheckbox>
+                                                    <h:outputLabel value="" />
+                                                    <p:commandLink id="commandLink" action="#{perfilesBean.selectAllCheckbox}" value="#{perfilesBean.manyCheckboxText}" update="grid commandLink" style="border-bottom:1px solid #5D7E95"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="controls" style="width: 205px;">
+                                            <p:commandButton id="saveDialog" action="#{perfilesBean.save}" process="@all" value="Guardar" styleClass="boton_tabla_editar" update="form" style="margin-right:7px"/>
+                                            <p:commandButton id="closeDialog" value="Cerrar" styleClass="boton_tabla_editar" update="form" action="#{perfilesBean.close}" style=" background-color:#555"/>
+                                        </div>
+
+                                    </section>
+                                </div>
+                            </div>
+                    </section>
+                </section>
+            </p:fragment>
+        </section>
+
+        <script type="text/javascript" src="../resources/js/jquery-ui/jquery-ui-1.10.1.custom.min.js"></script>
+        <script type="text/javascript" src="../resources/bs3/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.dcjqaccordion.2.7.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.scrollTo.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.nicescroll.js"></script>
+        <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+        <script type="text/javascript" src="../resources/js/skycons/skycons.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery.scrollTo/jquery.scrollTo.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+        <script type="text/javascript" src="../resources/js/calendar/clndr.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+        <script type="text/javascript" src="../resources/js/calendar/moment-2.2.1.js"></script>
+        <script type="text/javascript" src="../resources/js/evnt.calendar.init.js"></script>
+        <script type="text/javascript" src="../resources/js/jvector-map/jquery-jvectormap-1.2.2.min.js"></script>
+        <script type="text/javascript" src="../resources/js/jvector-map/jquery-jvectormap-us-lcc-en.js"></script>
+        <!--clock init-->
+        <script type="text/javascript" src="../resources/js/css3clock/js/css3clock.js"></script>
+        <!--Easy Pie Chart-->
+        <script type="text/javascript" src="../resources/js/easypiechart/jquery.easypiechart.js"></script>
+        <!--Sparkline Chart-->
+        <script type="text/javascript" src="../resources/js/sparkline/jquery.sparkline.js"></script>
+        <!--jQuery Flot Chart-->
+        <script type="text/javascript" src="../resources/js/jquery.customSelect.min.js" ></script>
+        <!--common script init for all pages-->
+        <script type="text/javascript" src="../resources/js/scripts.js"></script>
+        <!--script for this page-->
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#usuarios').addClass('active');
+                $('#sub_usuarios').css('display', 'block');
+                $('#mantenedor_perfiles').addClass('active');
+            });
+        </script>
+    </h:form>
+
+</h:body>
+</html>
